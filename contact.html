@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | Neethify</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
+
+  <style>
+    html, body {
+      transition: background-color 0.3s, color 0.3s;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800 dark:bg-gray-900 dark:text-white transition-colors duration-300 font-sans">
+
+  <!-- Header -->
+  <header class="fixed w-full bg-white dark:bg-gray-800 shadow z-50 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center space-x-2">
+        <i class="fas fa-scale-balanced text-2xl text-blue-600"></i>
+        <span class="text-2xl font-bold text-gray-800 dark:text-white">Neethify</span>
+      </a>
+
+      <!-- Navigation -->
+      <div class="flex items-center space-x-6">
+        <nav class="hidden md:flex space-x-4">
+          <a href="index.html" class="hover:text-blue-600">Home</a>
+          <a href="about.html" class="hover:text-blue-600">About</a>
+          <a href="services.html" class="hover:text-blue-600">Services</a>
+          <a href="faq.html" class="hover:text-blue-600">FAQ</a>
+          <a href="blog.html" class="hover:text-blue-600">Blog</a>
+          <a href="contact.html" class="text-blue-600 font-semibold">Contact</a>
+          <a href="buy.html" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-blue-700">Buy Now</a>
+        </nav>
+
+        <!-- Social Icons -->
+        <div class="hidden md:flex space-x-3 text-lg">
+          <a href="https://www.facebook.com/login" target="_blank" class="text-blue-600 hover:text-blue-800"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://twitter.com/login" target="_blank" class="text-blue-400 hover:text-blue-600"><i class="fab fa-twitter"></i></a>
+          <a href="https://www.instagram.com/accounts/login/" target="_blank" class="text-pink-500 hover:text-pink-700"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/login" target="_blank" class="text-blue-700 hover:text-blue-900"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="ml-4 text-xl">
+          <i id="toggle-icon" class="fas fa-moon text-gray-800 dark:text-white"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Section -->
+  <main class="pt-28 pb-16 px-4 max-w-7xl mx-auto">
+    <h1 class="text-4xl font-bold mb-8 text-center">Contact Us</h1>
+    <p class="text-center mb-12 text-gray-600 dark:text-gray-300">We’d love to hear from you. Reach out with any questions, comments or legal concerns.</p>
+
+    <!-- Contact Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <!-- Contact Info + Map -->
+      <div class="space-y-6">
+        <div class="space-y-2">
+          <h2 class="text-2xl font-semibold">Contact Info</h2>
+          <p><i class="fas fa-map-marker-alt mr-2 text-blue-600"></i> 123 Justice Lane, Legal City, IN 600001</p>
+          <p><i class="fas fa-envelope mr-2 text-blue-600"></i> support@neethify.com</p>
+          <p><i class="fas fa-phone mr-2 text-blue-600"></i> +91 98765 43210</p>
+        </div>
+
+        <!-- Map -->
+        <iframe class="w-full h-64 rounded-lg" loading="lazy"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.245971961474!2d79.85547247491994!3d10.768452189389408!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0067d5e0eb3cd3%3A0x9c74cf1762fd38e0!2sTamil%20Nadu%20Law%20University!5e0!3m2!1sen!2sin!4v1721128965107!5m2!1sen!2sin"
+          allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <!-- Contact Form -->
+      <form class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow space-y-6">
+        <div>
+          <label for="name" class="block font-semibold mb-1">Your Name</label>
+          <input type="text" id="name" name="name" required
+            class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+        </div>
+        <div>
+          <label for="email" class="block font-semibold mb-1">Your Email</label>
+          <input type="email" id="email" name="email" required
+            class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+        </div>
+        <div>
+          <label for="subject" class="block font-semibold mb-1">Subject</label>
+          <input type="text" id="subject" name="subject" required
+            class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+        </div>
+        <div>
+          <label for="message" class="block font-semibold mb-1">Message</label>
+          <textarea id="message" name="message" rows="5" required
+            class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+        </div>
+        <button type="submit"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold">Send Message</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 dark:bg-gray-800 text-center py-6 text-sm text-gray-600 dark:text-gray-300">
+    <p>&copy; <span id="year"></span> Neethify. All rights reserved.</p>
+  </footer>
+
+  <!-- Theme Script -->
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const html = document.documentElement;
+    const toggleBtn = document.getElementById("theme-toggle");
+    const toggleIcon = document.getElementById("toggle-icon");
+
+    function setTheme(theme) {
+      if (theme === "dark") {
+        html.classList.add("dark");
+        toggleIcon.classList.remove("fa-moon");
+        toggleIcon.classList.add("fa-sun");
+      } else {
+        html.classList.remove("dark");
+        toggleIcon.classList.remove("fa-sun");
+        toggleIcon.classList.add("fa-moon");
+      }
+      localStorage.setItem("theme", theme);
+    }
+
+    const storedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialTheme = storedTheme || (prefersDark ? "dark" : "light");
+    setTheme(initialTheme);
+
+    toggleBtn.addEventListener("click", () => {
+      const isDark = html.classList.contains("dark");
+      setTheme(isDark ? "light" : "dark");
+    });
+  </script>
+</body>
+</html>
