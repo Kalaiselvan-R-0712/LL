@@ -89,6 +89,13 @@
         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded font-semibold">Login</button>
       </form>
 
+      <!-- Continue as Guest -->
+      <div class="text-center mt-4">
+        <button onclick="continueAsGuest()" class="text-blue-600 hover:underline text-sm">
+          Continue as Guest
+        </button>
+      </div>
+
       <p class="text-center text-sm text-gray-600 dark:text-gray-400">
         Don't have an account?
         <a href="register.html" class="text-blue-600 hover:underline">Register here</a>.
@@ -154,12 +161,19 @@
     // Login Redirect (Simulated)
     document.getElementById("loginForm").addEventListener("submit", (e) => {
       e.preventDefault();
+      localStorage.setItem("role", currentRole);
       if (currentRole === "admin") {
         window.location.href = "admin-dashboard.html";
       } else {
         window.location.href = "customer-dashboard.html";
       }
     });
+
+    // Guest Login Redirect
+    function continueAsGuest() {
+      localStorage.setItem("role", "guest");
+      window.location.href = "index.html";
+    }
   </script>
 </body>
 </html>
