@@ -92,7 +92,7 @@
         </div>
       </div>
 
-      <div class="text-center mt-4">
+      <div class="text-center mt-6">
         <button onclick="continueAsGuest()" class="text-blue-600 hover:underline text-sm">Continue as Guest</button>
       </div>
 
@@ -108,121 +108,133 @@
   </footer>
 
   <!-- Scripts -->
-  <script>
-    // Year in footer
-    document.getElementById("year").textContent = new Date().getFullYear();
+  <!-- ⬇️ Keep the exact code you've provided UNTIL this part — only replace the <script> block at the bottom -->
 
-    // Theme Toggle
-    const html = document.documentElement;
-    const toggleBtn = document.getElementById("theme-toggle");
-    const toggleIcon = document.getElementById("toggle-icon");
+<!-- Scripts -->
+<script>
+  // Year in footer
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-    function setTheme(theme) {
-      if (theme === "dark") {
-        html.classList.add("dark");
-        toggleIcon.classList.replace("fa-moon", "fa-sun");
-      } else {
-        html.classList.remove("dark");
-        toggleIcon.classList.replace("fa-sun", "fa-moon");
-      }
-      localStorage.setItem("theme", theme);
+  // Theme Toggle
+  const html = document.documentElement;
+  const toggleBtn = document.getElementById("theme-toggle");
+  const toggleIcon = document.getElementById("toggle-icon");
+
+  function setTheme(theme) {
+    if (theme === "dark") {
+      html.classList.add("dark");
+      toggleIcon.classList.replace("fa-moon", "fa-sun");
+    } else {
+      html.classList.remove("dark");
+      toggleIcon.classList.replace("fa-sun", "fa-moon");
     }
+    localStorage.setItem("theme", theme);
+  }
 
-    setTheme(localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+  setTheme(localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
 
-    toggleBtn.addEventListener("click", () => {
-      const isDark = html.classList.contains("dark");
-      setTheme(isDark ? "light" : "dark");
-    });
+  toggleBtn.addEventListener("click", () => {
+    const isDark = html.classList.contains("dark");
+    setTheme(isDark ? "light" : "dark");
+  });
 
-    // Role Toggle
-    let currentRole = "customer";
-    const customerBtn = document.getElementById("customerBtn");
-    const adminBtn = document.getElementById("adminBtn");
+  // Role Toggle
+  let currentRole = "customer";
+  const customerBtn = document.getElementById("customerBtn");
+  const adminBtn = document.getElementById("adminBtn");
 
-    function switchRole(role) {
-      currentRole = role;
+  function switchRole(role) {
+    currentRole = role;
 
-      if (role === "customer") {
-        customerBtn.classList.add("bg-blue-600", "text-white");
-        customerBtn.classList.remove("text-gray-700", "dark:text-gray-300");
+    if (role === "customer") {
+      customerBtn.classList.add("bg-blue-600", "text-white");
+      customerBtn.classList.remove("text-gray-700", "dark:text-gray-300");
 
-        adminBtn.classList.remove("bg-blue-600", "text-white");
-        adminBtn.classList.add("text-gray-700", "dark:text-gray-300");
-      } else {
-        adminBtn.classList.add("bg-blue-600", "text-white");
-        adminBtn.classList.remove("text-gray-700", "dark:text-gray-300");
+      adminBtn.classList.remove("bg-blue-600", "text-white");
+      adminBtn.classList.add("text-gray-700", "dark:text-gray-300");
+    } else {
+      adminBtn.classList.add("bg-blue-600", "text-white");
+      adminBtn.classList.remove("text-gray-700", "dark:text-gray-300");
 
-        customerBtn.classList.remove("bg-blue-600", "text-white");
-        customerBtn.classList.add("text-gray-700", "dark:text-gray-300");
-      }
+      customerBtn.classList.remove("bg-blue-600", "text-white");
+      customerBtn.classList.add("text-gray-700", "dark:text-gray-300");
     }
+  }
 
-    customerBtn.addEventListener("click", () => switchRole("customer"));
-    adminBtn.addEventListener("click", () => switchRole("admin"));
+  customerBtn.addEventListener("click", () => switchRole("customer"));
+  adminBtn.addEventListener("click", () => switchRole("admin"));
 
-    // Password toggle
-    const passwordInput = document.getElementById("password");
-    const togglePasswordBtn = document.getElementById("togglePassword");
+  // Password toggle
+  const passwordInput = document.getElementById("password");
+  const togglePasswordBtn = document.getElementById("togglePassword");
 
-    togglePasswordBtn.addEventListener("click", () => {
-      const isPwd = passwordInput.type === "password";
-      passwordInput.type = isPwd ? "text" : "password";
-      togglePasswordBtn.innerHTML = `<i class="fas fa-${isPwd ? "eye-slash" : "eye"}"></i>`;
-    });
+  togglePasswordBtn.addEventListener("click", () => {
+    const isPwd = passwordInput.type === "password";
+    passwordInput.type = isPwd ? "text" : "password";
+    togglePasswordBtn.innerHTML = `<i class="fas fa-${isPwd ? "eye-slash" : "eye"}"></i>`;
+  });
 
-    // Login form
-    document.getElementById("loginForm").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const email = document.getElementById("email").value.trim();
-  const pwd = document.getElementById("password").value.trim();
-  const errorMsg = document.getElementById("errorMsg");
+  // Login form
+  document.getElementById("loginForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    const pwd = document.getElementById("password").value.trim();
+    const errorMsg = document.getElementById("errorMsg");
+    errorMsg.classList.add("hidden");
 
-  errorMsg.classList.add("hidden");
-
-  if (currentRole === "admin") {
-    // Check hardcoded admin OR match from localStorage with role admin
     const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const adminUser = users.find(u =>
+
+    const matchedUser = users.find(u =>
       u.email === email &&
       u.password === pwd &&
       u.role &&
-      u.role.toLowerCase() === "admin"
+      u.role.toLowerCase() === currentRole
     );
 
     if (
-      (email === "admin@example.com" && pwd === "admin123") ||
-      adminUser
+      currentRole === "admin" &&
+      (email === "admin@example.com" && pwd === "admin123")
     ) {
+      // Allow hardcoded admin
       localStorage.setItem("role", "admin");
-      localStorage.setItem("loggedInUser", JSON.stringify(adminUser || { email, role: "admin" }));
+      localStorage.setItem("loggedInUser", JSON.stringify({ email, role: "admin" }));
       window.location.href = "admin-dashboard.html";
+    } else if (matchedUser) {
+      localStorage.setItem("role", currentRole);
+      localStorage.setItem("loggedInUser", JSON.stringify(matchedUser));
+      window.location.href = currentRole === "admin" ? "admin-dashboard.html" : "customer-dashboard.html";
     } else {
       errorMsg.classList.remove("hidden");
       alert("Email or password is incorrect, or role mismatch.");
     }
+  });
 
-  } else {
-    // Match only customers with customer role
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const user = users.find(u =>
-      u.email === email &&
-      u.password === pwd &&
-      u.role &&
-      u.role.toLowerCase() === "customer"
-    );
+  // Forgot password navigation
+  function showForgotPassword() {
+    document.getElementById("loginForm").classList.add("hidden");
+    document.getElementById("forgotPasswordSection").classList.remove("hidden");
+  }
 
-    if (user) {
-      localStorage.setItem("role", "customer");
-      localStorage.setItem("loggedInUser", JSON.stringify(user));
-      window.location.href = "customer-dashboard.html";
+  function backToLogin() {
+    document.getElementById("forgotPasswordSection").classList.add("hidden");
+    document.getElementById("loginForm").classList.remove("hidden");
+  }
+
+  function sendResetInstructions() {
+    const resetEmail = document.getElementById("resetEmail").value.trim();
+    if (resetEmail) {
+      alert("Reset link sent to: " + resetEmail);
     } else {
-      errorMsg.classList.remove("hidden");
-      alert("Email or password is incorrect, or role mismatch.");
+      alert("Please enter a valid email.");
     }
   }
-});
 
-  </script>
+  // Continue as Guest
+  function continueAsGuest() {
+    localStorage.setItem("role", "guest");
+    localStorage.setItem("loggedInUser", JSON.stringify({ role: "guest" }));
+    window.location.href = "index.html";
+  }
+</script>
 </body>
 </html>
