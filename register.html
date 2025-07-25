@@ -46,7 +46,7 @@
 
         <div>
           <label for="name" class="block text-sm font-semibold mb-1">Full Name</label>
-          <input type="text" id="name" name="name" required class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
+          <input type="text" id="name" name="name" required class="capitalize w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white" />
         </div>
 
         <div>
@@ -74,12 +74,12 @@
 
         <div>
           <label for="marital" class="block text-sm font-semibold mb-1">Marital Status</label>
-          <select id="marital" name="marital" required class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+          <select id="marital" name="marital" required class="capitalize w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
             <option value="" disabled selected>Select Status</option>
-            <option value="single">Single</option>
-            <option value="married">Married</option>
-            <option value="divorced">Divorced</option>
-            <option value="widowed">Widowed</option>
+            <option value="Single">Single</option>
+            <option value="Married">Married</option>
+            <option value="Divorced">Divorced</option>
+            <option value="Widowed">Widowed</option>
           </select>
         </div>
 
@@ -87,13 +87,12 @@
           <label for="gender" class="block text-sm font-semibold mb-1">Gender</label>
           <select id="gender" name="gender" required class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
             <option value="" disabled selected>Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
           </select>
         </div>
 
-        <!-- Role moved to last -->
         <div>
           <label for="role" class="block text-sm font-semibold mb-1">Role</label>
           <select id="role" name="role" required class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white">
@@ -126,90 +125,97 @@
 
   <!-- Scripts -->
   <script>
-  document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-  const html = document.documentElement;
-  const toggleBtn = document.getElementById("theme-toggle");
-  const toggleIcon = document.getElementById("toggle-icon");
+    const html = document.documentElement;
+    const toggleBtn = document.getElementById("theme-toggle");
+    const toggleIcon = document.getElementById("toggle-icon");
 
-  function setIconBasedOnTheme() {
-    if (html.classList.contains("dark")) {
-      toggleIcon.classList.remove("fa-moon");
-      toggleIcon.classList.add("fa-sun");
-    } else {
-      toggleIcon.classList.remove("fa-sun");
-      toggleIcon.classList.add("fa-moon");
+    function setIconBasedOnTheme() {
+      if (html.classList.contains("dark")) {
+        toggleIcon.classList.remove("fa-moon");
+        toggleIcon.classList.add("fa-sun");
+      } else {
+        toggleIcon.classList.remove("fa-sun");
+        toggleIcon.classList.add("fa-moon");
+      }
     }
-  }
 
-  toggleBtn.addEventListener("click", () => {
-    html.classList.toggle("dark");
-    const newTheme = html.classList.contains("dark") ? "dark" : "light";
-    localStorage.setItem("theme", newTheme);
+    toggleBtn.addEventListener("click", () => {
+      html.classList.toggle("dark");
+      const newTheme = html.classList.contains("dark") ? "dark" : "light";
+      localStorage.setItem("theme", newTheme);
+      setIconBasedOnTheme();
+    });
+
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      html.classList.add("dark");
+    } else {
+      html.classList.remove("dark");
+    }
     setIconBasedOnTheme();
-  });
 
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "dark") {
-    html.classList.add("dark");
-  } else {
-    html.classList.remove("dark");
-  }
-  setIconBasedOnTheme();
+    function continueAsGuest() {
+      localStorage.setItem("role", "guest");
+      window.location.href = "index.html";
+    }
 
-  function continueAsGuest() {
-    localStorage.setItem("role", "guest");
-    window.location.href = "index.html";
-  }
+    const passwordField = document.getElementById("password");
+    const confirmField = document.getElementById("confirm-password");
+    const passwordHelp = document.getElementById("passwordHelp");
+    const confirmHelp = document.getElementById("confirmHelp");
 
-  const passwordField = document.getElementById("password");
-  const confirmField = document.getElementById("confirm-password");
-  const passwordHelp = document.getElementById("passwordHelp");
-  const confirmHelp = document.getElementById("confirmHelp");
+    passwordField.addEventListener("input", () => {
+      const pwd = passwordField.value;
+      const valid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(pwd);
+      passwordHelp.textContent = valid ? "" : "Password must be at least 8 characters, include uppercase, lowercase, number, and special symbol.";
+    });
 
-  passwordField.addEventListener("input", () => {
-    const pwd = passwordField.value;
-    const valid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(pwd);
-    passwordHelp.textContent = valid ? "" : "Password must be at least 8 characters, include uppercase, lowercase, number, and special symbol.";
-  });
+    confirmField.addEventListener("input", () => {
+      confirmHelp.textContent = passwordField.value !== confirmField.value ? "Passwords must be same" : "";
+    });
 
-  confirmField.addEventListener("input", () => {
-    confirmHelp.textContent = passwordField.value !== confirmField.value ? "Passwords must be same" : "";
-  });
+    document.getElementById("dob").addEventListener("change", () => {
+      const dob = new Date(document.getElementById("dob").value);
+      const age = new Date().getFullYear() - dob.getFullYear();
+      document.getElementById("dobHelp").textContent = age < 18 ? "You must be at least 18 years old to register." : "";
+    });
 
-  document.getElementById("dob").addEventListener("change", () => {
-    const dob = new Date(document.getElementById("dob").value);
-    const age = new Date().getFullYear() - dob.getFullYear();
-    document.getElementById("dobHelp").textContent = age < 18 ? "You must be at least 18 years old to register." : "";
-  });
+    document.getElementById("registerForm").addEventListener("submit", (e) => {
+      e.preventDefault();
 
-  document.getElementById("registerForm").addEventListener("submit", (e) => {
-    e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+      const dob = document.getElementById("dob").value;
+      const marital = document.getElementById("marital").value;
+      const gender = document.getElementById("gender").value;
+      const role = document.getElementById("role").value;
 
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirm-password").value;
-    const dob = document.getElementById("dob").value;
-    const marital = document.getElementById("marital").value;
-    const gender = document.getElementById("gender").value;
-    const role = document.getElementById("role").value;
+      const dobDate = new Date(dob);
+      const age = new Date().getFullYear() - dobDate.getFullYear();
+      if (age < 18) return alert("You must be at least 18 years old to register.");
+      if (password !== confirmPassword) return alert("Passwords must be same");
 
-    const dobDate = new Date(dob);
-    const age = new Date().getFullYear() - dobDate.getFullYear();
-    if (age < 18) return alert("You must be at least 18 years old to register.");
-    if (password !== confirmPassword) return alert("Passwords must be same");
+      const user = {
+        fullName: name,
+        email,
+        password,
+        dob,
+        maritalStatus: marital,
+        gender,
+        role
+      };
 
-    const user = { name, email, password, dob, marital, gender, role };
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      users.push(user);
+      localStorage.setItem("users", JSON.stringify(users));
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    users.push(user);
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Registration successful. Redirecting to login.");
-    window.location.href = "login.html";
-  });
-</script>
-
+      alert("Registration successful. Redirecting to login.");
+      window.location.href = "login.html";
+    });
+  </script>
 </body>
 </html>
